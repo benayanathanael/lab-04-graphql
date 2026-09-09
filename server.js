@@ -5,12 +5,35 @@ const { startStandaloneServer } = require('@apollo/server/standalone');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 
+const defaultQuery = `query GetUsersWithOrdersAndProducts {
+  users {
+    id
+    name
+    email
+    orders {
+      id
+      quantity
+      status
+      product {
+        id
+        name
+        price
+        stock
+        status
+      }
+    }
+  }
+}`;
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
   plugins: [
-    ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+    ApolloServerPluginLandingPageLocalDefault({
+      embed: true,
+      document: defaultQuery,
+    }),
   ],
 });
 
