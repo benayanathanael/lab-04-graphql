@@ -1,0 +1,22 @@
+require('dotenv').config();
+const { ApolloServer } = require('@apollo/server');
+const { startStandaloneServer } = require('@apollo/server/standalone');
+const typeDefs = require('./schema');
+const resolvers = require('./resolvers');
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  introspection: true,
+});
+
+const PORT = process.env.PORT || 4000;
+
+async function startServer() {
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: Number(PORT) },
+  });
+  console.log(`🚀 Server ready at: ${url}`);
+}
+
+startServer();
