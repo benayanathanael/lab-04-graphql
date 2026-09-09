@@ -36,11 +36,11 @@ const typeDefs = `#graphql
 
   type Query {
     users: [User!]!
-    user(id: ID! = "1"): User
+    user(id: ID = "1"): User
     products: [Product!]!
-    product(id: ID! = "1"): Product
+    product(id: ID = "1"): Product
     orders: [Order!]!
-    order(id: ID! = "1"): Order
+    order(id: ID = "1"): Order
   }
 `;
 
