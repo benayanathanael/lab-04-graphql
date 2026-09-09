@@ -15,7 +15,7 @@ const resolvers = {
       const res = await pool.query('SELECT * FROM users');
       return res.rows;
     },
-    user: async (_, { id }) => {
+    user: async (_, { id = '1' }) => {
       const res = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
       return res.rows[0] || null;
     },
@@ -23,7 +23,7 @@ const resolvers = {
       const res = await pool.query('SELECT * FROM products');
       return res.rows.map(formatProduct);
     },
-    product: async (_, { id }) => {
+    product: async (_, { id = '1' }) => {
       const res = await pool.query('SELECT * FROM products WHERE id = $1', [id]);
       return formatProduct(res.rows[0]);
     },
@@ -31,7 +31,7 @@ const resolvers = {
       const res = await pool.query('SELECT * FROM orders');
       return res.rows;
     },
-    order: async (_, { id }) => {
+    order: async (_, { id = '1' }) => {
       const res = await pool.query('SELECT * FROM orders WHERE id = $1', [id]);
       return res.rows[0] || null;
     },
