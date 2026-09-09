@@ -1,4 +1,5 @@
 const { ApolloServer } = require('@apollo/server');
+const { ApolloServerPluginLandingPageLocalDefault } = require('@apollo/server/plugin/landingPage/default');
 const { startServerAndCreateNextHandler } = require('@as-integrations/next');
 const typeDefs = require('../../../schema');
 const resolvers = require('../../../resolvers');
@@ -7,6 +8,9 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
+  plugins: [
+    ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+  ],
 });
 
 const handler = startServerAndCreateNextHandler(server, {
