@@ -131,10 +131,10 @@ const resolvers = {
 
   User: {
     orders: async (parent) => {
-      userOrdersResolverCallCount += 1;
+      userOrdersResolverCallCount++;
 
       console.log(
-        `[N+1 TEST] User.orders dipanggil untuk user id=${parent.id} — total pemanggilan sejauh ini: ${userOrdersResolverCallCount}`
+        `[N+1 TEST] User.orders dipanggil untuk user id=${parent.id} — total: ${userOrdersResolverCallCount}`
       );
 
       const res = await pool.query(
