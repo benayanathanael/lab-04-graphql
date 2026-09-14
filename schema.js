@@ -34,13 +34,40 @@ const typeDefs = `#graphql
     product: Product
   }
 
+  """
+  Input untuk membuat product baru.
+  """
+  input CreateProductInput {
+    name: String!
+    price: Float!
+    stock: Int!
+    status: String
+  }
+
+  """
+  Input untuk mengubah product yang sudah ada.
+  Semua field opsional: field yang tidak dikirim tidak akan diubah.
+  """
+  input UpdateProductInput {
+    name: String
+    price: Float
+    stock: Int
+    status: String
+  }
+
   type Query {
     users: [User!]!
     user(id: ID = "1"): User
-    products: [Product!]!
+    products(status: String, minPrice: Float, maxPrice: Float): [Product!]!
     product(id: ID = "1"): Product
     orders: [Order!]!
     order(id: ID = "1"): Order
+  }
+
+  type Mutation {
+    createProduct(input: CreateProductInput!): Product!
+    updateProduct(id: ID!, input: UpdateProductInput!): Product!
+    deleteProduct(id: ID!): Boolean!
   }
 `;
 
