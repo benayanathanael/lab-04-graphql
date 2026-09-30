@@ -36,11 +36,43 @@ const server = new ApolloServer({
   ],
 });
 
+const jwt = require('jsonwebtoken');
+
+const getUserFromHeader = (authHeader) => {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return null;
+  }
+  const token = authHeader.substring(7).trim();
+  try {
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) return null;
+    return jwt.verify(token, jwtSecret);
+  } catch (err) {
+    return null;
+  }
+};
+
 const handler = startServerAndCreateNextHandler(server, {
-  context: async (req) => ({ req }),
+  context: async (req) => {
+    let authHeader = '';
+    if (req.headers) {
+      authHeader = typeof req.headers.get === 'function'
+        ? (req.headers.get('authorization') || '')
+        : (req.headers.authorization || '');
+    }
+    const user = getUserFromHeader(authHeader);
+    return { req, user };
+  },
 });
 
 async function handleRequest(request) {
+  const url = new URL(request.url);
+  if (request.method === 'GET' && url.searchParams.has('code')) {
+    const callbackUrl = new URL('/auth/callback', request.url);
+    callbackUrl.search = url.search;
+    return Response.redirect(callbackUrl.toString(), 307);
+  }
+
   if (request.method === 'OPTIONS') {
     return new Response(null, {
       status: 200,

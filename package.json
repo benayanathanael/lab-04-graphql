@@ -15,9 +15,13 @@
   "type": "commonjs",
   "dependencies": {
     "@apollo/server": "^5.5.1",
+    "@as-integrations/express5": "^1.1.2",
     "@as-integrations/next": "^4.1.0",
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
+    "express": "^5.2.1",
     "graphql": "^16.14.2",
+    "jsonwebtoken": "^9.0.3",
     "next": "^16.3.4",
     "pg": "^8.23.0",
     "react": "^19.2.8",

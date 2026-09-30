@@ -61,7 +61,11 @@ const resolvers = {
   },
 
   Mutation: {
-    createProduct: async (_, { input }) => {
+    createProduct: async (_, { input }, context) => {
+      if (!context || !context.user) {
+        throw new Error('Unauthorized: silakan login terlebih dahulu');
+      }
+
       const { name, price, stock, status } = input;
       const finalStatus = status || 'ACTIVE';
 
