@@ -66,13 +66,6 @@ const handler = startServerAndCreateNextHandler(server, {
 });
 
 async function handleRequest(request) {
-  const url = new URL(request.url);
-  if (request.method === 'GET' && url.searchParams.has('code')) {
-    const callbackUrl = new URL('/auth/callback', request.url);
-    callbackUrl.search = url.search;
-    return Response.redirect(callbackUrl.toString(), 307);
-  }
-
   if (request.method === 'OPTIONS') {
     return new Response(null, {
       status: 200,
